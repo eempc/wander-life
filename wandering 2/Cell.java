@@ -17,33 +17,33 @@ public class Cell {
     // The number of possible states.
     public static final int NUM_STATES = 2;
     // Directions
-    static final int UP = 0, DOWN = 1, LEFT = 2, RIGHT = 3;
+    //static final int UP = 0, DOWN = 1, LEFT = 2, RIGHT = 3;
 
     // Coordinates of this cell
     private int colIndex, rowIndex;
 
     // Info about the game board's size - default to 50 for now
-    private int columnsSize = 50, rowsSize = 50;
+    //private int columnsSize = 50, rowsSize = 50;
 
     // The cell's state.
     private int state;
     // The cell's neighbors.
-    private Cell[] neighbors;
+    //private Cell[] neighbors;
     // direction
-    private int direction;
+    //private int direction;
     //
     Random rng;
 
     /**
      * Set the initial state to be DEAD.
      */
-    public Cell(int col, int row) {
+    public Cell(int row, int col) {
         colIndex = col;
         rowIndex = row;
         state = DEAD;
-        neighbors = new Cell[0];
+        //neighbors = new Cell[0];
         rng = new Random();
-        setDirection();
+        //setDirection();
     }
 
     /**
@@ -51,34 +51,30 @@ public class Cell {
      *
      * @param initialState The initial state
      */
-    public Cell(int col, int row, int initialState) {
+    public Cell(int row, int col, int initialState) {
         colIndex = col;
         rowIndex = row;
         state = initialState;
-        neighbors = new Cell[0];
+        //neighbors = new Cell[0];
         rng = new Random();
-        setDirection();
+        //setDirection();
     }
 
-    public void setDirection() {
-
-        if (rowIndex == 0) {
-            if (colIndex == 0) { direction = DOWN; } // TL
-            else if (colIndex == columnsSize - 1) { direction = LEFT; }  // TR
-            else { direction = rng.nextInt(2) + 2; }
-        } else if (rowIndex == rowsSize - 1) {
-            if (colIndex == 0) { direction = UP; } // BL
-            else if (colIndex == columnsSize - 1) { direction = LEFT; }  // BR
-            else { direction = rng.nextInt(2) + 2; }
-        }
-
-
-        if ((colIndex == 0 || colIndex == columnsSize - 1) && rowIndex != 0 && rowIndex != rowsSize - 1) {
-            direction = rng.nextInt(2);
-        }
-
-
-    }
+//    public void setDirection() {
+//        if (rowIndex == 0) {
+//            if (colIndex == 0) { direction = DOWN; } // TL
+//            else if (colIndex == columnsSize - 1) { direction = LEFT; }  // TR
+//            else { direction = rng.nextInt(2) + 2; }
+//        } else if (rowIndex == rowsSize - 1) {
+//            if (colIndex == 0) { direction = UP; } // BL
+//            else if (colIndex == columnsSize - 1) { direction = LEFT; }  // BR
+//            else { direction = rng.nextInt(2) + 2; }
+//        }
+//
+//        if ((colIndex == 0 || colIndex == columnsSize - 1) && rowIndex != 0 && rowIndex != rowsSize - 1) {
+//            direction = rng.nextInt(2);
+//        }
+//    }
 
     public int getColIndex() {
         return colIndex;
@@ -95,59 +91,59 @@ public class Cell {
      *
      * @return The next state.
      */
-    public int getNextState(int nRows, int nCols) {
-//        int aliveCount = 0;
+//    public int getNextState(int nRows, int nCols) {
+////        int aliveCount = 0;
+////        for (Cell n : neighbors) {
+////            if (n.getState() == ALIVE) {
+////                aliveCount++;
+////            }
+////        }
+////
+////        if (state == DEAD) {
+////            return (aliveCount == 3) ? ALIVE : DEAD;
+////        } else {
+////            //return (aliveCount < 2 || aliveCount > 3) ? DEAD : ALIVE;
+////            return (aliveCount == 2 || aliveCount == 3) ? ALIVE : DEAD;
+////        }
+//
+//
 //        for (Cell n : neighbors) {
+//            // Is this dead cell next to a live cell? Is the cell next to be resurrected? You can tell by the direction of the live cell
+//            // Why can't I get the freaking coordinates?
 //            if (n.getState() == ALIVE) {
-//                aliveCount++;
+//                switch(n.getDirection()) {
+//                    // If the neighbour is the one below and has a direction of UP, then this one is next to revive
+//                    case UP:
+//                        if (n.getColIndex() == this.colIndex && n.getRowIndex() - this.rowIndex == -1) {
+//                            return ALIVE;
+//                        }
+//                        break;
+//                    case DOWN:
+//                        if (n.getColIndex() == this.colIndex && n.getRowIndex() - this.rowIndex == 1) {
+//                            return ALIVE;
+//                        }
+//                        break;
+//                    case LEFT:
+//                        if (n.getColIndex() + 1 == this.colIndex && n.getRowIndex() == this.rowIndex) {
+//                            return ALIVE;
+//                        }
+//                        break;
+//                    case RIGHT:
+//                        if (n.getColIndex() - 1 == this.colIndex && n.getRowIndex() == this.rowIndex) {
+//                            return ALIVE;
+//                        }
+//                        break;
+//                }
 //            }
 //        }
 //
-//        if (state == DEAD) {
-//            return (aliveCount == 3) ? ALIVE : DEAD;
-//        } else {
-//            //return (aliveCount < 2 || aliveCount > 3) ? DEAD : ALIVE;
-//            return (aliveCount == 2 || aliveCount == 3) ? ALIVE : DEAD;
-//        }
-
-
-        for (Cell n : neighbors) {
-            // Is this dead cell next to a live cell? Is the cell next to be resurrected? You can tell by the direction of the live cell
-            // Why can't I get the freaking coordinates?
-            if (n.getState() == ALIVE) {
-                switch(n.getDirection()) {
-                    // If the neighbour is the one below and has a direction of UP, then this one is next to revive
-                    case UP:
-                        if (n.getColIndex() == this.colIndex && n.getRowIndex() - this.rowIndex == -1) {
-                            return ALIVE;
-                        }
-                        break;
-                    case DOWN:
-                        if (n.getColIndex() == this.colIndex && n.getRowIndex() - this.rowIndex == 1) {
-                            return ALIVE;
-                        }
-                        break;
-                    case LEFT:
-                        if (n.getColIndex() + 1 == this.colIndex && n.getRowIndex() == this.rowIndex) {
-                            return ALIVE;
-                        }
-                        break;
-                    case RIGHT:
-                        if (n.getColIndex() - 1 == this.colIndex && n.getRowIndex() == this.rowIndex) {
-                            return ALIVE;
-                        }
-                        break;
-                }
-            }
-        }
-
-        return DEAD;
-
-    }
-
-    public int getDirection() {
-        return direction;
-    }
+//        return DEAD;
+//
+//    }
+//
+//    public int getDirection() {
+//        return direction;
+//    }
 
     /**
      * Receive the list of neighboring cells and take
@@ -155,10 +151,10 @@ public class Cell {
      *
      * @param neighborList Neighboring cells.
      */
-    public void setNeighbors(ArrayList<Cell> neighborList) {
-        neighbors = new Cell[neighborList.size()];
-        neighborList.toArray(neighbors);
-    }
+//    public void setNeighbors(ArrayList<Cell> neighborList) {
+//        neighbors = new Cell[neighborList.size()];
+//        neighborList.toArray(neighbors);
+//    }
 
     /**
      * Get the state of this cell.

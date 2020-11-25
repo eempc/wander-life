@@ -130,6 +130,13 @@ public class EnvironmentView extends JFrame
             env.single();
             showCells();
         });
+
+        final JButton multi = new JButton("Multi");
+        multi.addActionListener(e -> {
+            running = false;
+            env.multi();
+            showCells();
+        });
         
         Container contents = getContentPane();
         
@@ -152,6 +159,7 @@ public class EnvironmentView extends JFrame
         controls.add(reset);
         controls.add(randomize);
         controls.add(single);
+        controls.add(multi);
         
         contents.add(controls, BorderLayout.SOUTH);
     }
