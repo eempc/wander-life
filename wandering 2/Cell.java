@@ -18,7 +18,6 @@ public class Cell {
     private int colIndex, rowIndex;
     // The cell's state.
     private int state;
-    Random rng;
 
     /**
      * Set the initial state to be DEAD.
@@ -27,7 +26,6 @@ public class Cell {
         colIndex = col;
         rowIndex = row;
         state = DEAD;
-        rng = new Random();
     }
 
     /**
@@ -39,7 +37,6 @@ public class Cell {
         colIndex = col;
         rowIndex = row;
         state = initialState;
-        rng = new Random();
     }
 
     public int getColIndex() {
