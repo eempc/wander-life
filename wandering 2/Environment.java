@@ -69,22 +69,6 @@ public class Environment {
 
         int numRows = cells.length;
         int numCols = cells[0].length;
-        // Build a record of the next state of each cell.
-//        int[][] nextStates = new int[numRows][numCols];
-//        // Ask each cell to determine its next state.
-//        for (int row = 0; row < numRows; row++) {
-//            int[] rowOfStates = nextStates[row];
-//            for (int col = 0; col < numCols; col++) {
-//                rowOfStates[col] = cells[row][col].getNextState(nRows, nCols);
-//            }
-//        }
-//        // Update the cells' states.
-//        for (int row = 0; row < numRows; row++) {
-//            int[] rowOfStates = nextStates[row];
-//            for (int col = 0; col < numCols; col++) {
-//                setCellState(row, col, rowOfStates[col]);
-//            }
-//        }
 
         Iterator<Cell> it = liveCells.iterator();
 
@@ -96,11 +80,36 @@ public class Environment {
             System.out.println(currentCellRow);
             System.out.println(currentCellColumn);
 
-            // Assign this cell's neighbours
-            Cell north = cells[currentCellRow + 1][currentCellColumn];
-            Cell east = cells[currentCellRow][currentCellColumn + 1];
-            Cell south = cells[currentCellRow - 1][currentCellColumn];
-            Cell west = cells[currentCellRow][currentCellColumn -1];
+            ArrayList<Cell> choices = new ArrayList<>();
+
+            // If not top row, add the south
+            if (currentCellRow != 0) {
+                choices.add(cells[currentCellRow - 1][currentCellColumn]);
+            }
+
+            // If not left column, add the west
+            if (currentCellColumn != 0){
+                choices.add(cells[currentCellRow][currentCellColumn - 1]);
+            }
+            
+            // If not bottom row, add the south
+            if (currentCellRow != numRows - 1) {
+                choices.add(cells[currentCellRow + 1][currentCellColumn]);
+            }
+
+            // If not right column, add the east
+            if (currentCellColumn != numCols - 1) {
+                choices.add(cells[currentCellRow][currentCellColumn + 1]);
+            }
+
+            int cat = rng.nextInt(choices.size());
+            tempNewLiveCells.add(choices.get(cat));
+
+            // Assign this cell's neighbours - edge detection required
+//            Cell north = (currentCellRow != 0) ? cells[currentCellRow + 1][currentCellColumn] : new Cell(-1, -1);
+//            Cell east = (currentCellColumn != 0) ? cells[currentCellRow][currentCellColumn + 1] : new Cell(-1, -1);
+//            Cell south = (currentCellRow != numRows - 1) ? cells[currentCellRow - 1][currentCellColumn] : new Cell(-1, -1);
+//            Cell west = (currentCellColumn != numCols - 1) ? cells[currentCellRow][currentCellColumn -1] : new Cell(-1, -1);
 
             // Edge and corner detection
             // 0 = north, 1 = east, 2 = south, 3 = west
@@ -158,23 +167,24 @@ public class Environment {
 //                tempNewLiveCells.add(allChoices[x]);
 //            }
 
-            // Basic logic for moving cells without taking into account the edges/corners
-            int dir = rng.nextInt(4);
 
-            switch (dir) {
-                case 0:
-                    tempNewLiveCells.add(north); // north
-                    break;
-                case 1:
-                    tempNewLiveCells.add(east); // east
-                    break;
-                case 2:
-                    tempNewLiveCells.add(south); // south
-                    break;
-                case 3:
-                    tempNewLiveCells.add(west); // west
-                    break;
-            }
+            // Basic logic for moving cells without taking into account the edges/corners
+//            int dir = rng.nextInt(4);
+//
+//            switch (dir) {
+//                case 0:
+//                    tempNewLiveCells.add(north); // north
+//                    break;
+//                case 1:
+//                    tempNewLiveCells.add(east); // east
+//                    break;
+//                case 2:
+//                    tempNewLiveCells.add(south); // south
+//                    break;
+//                case 3:
+//                    tempNewLiveCells.add(west); // west
+//                    break;
+//            }
 
             // Kill current live cell
             setCellState(currentCellRow, currentCellColumn, Cell.DEAD);
@@ -219,7 +229,6 @@ public class Environment {
         setCellState(25, 25, 0);
         liveCells = new ArrayList<>();
         liveCells.add(cells[25][25]);
-
     }
 
     public void multi() {
@@ -229,17 +238,8 @@ public class Environment {
             int cat = rng.nextInt(nRows);
             int dog = rng.nextInt(nCols);
             setCellState(cat, dog, 0);
-
             liveCells.add(cells[cat][dog]);
         }
-
-//        int a = 25;
-//        setCellState(a, a, 0);
-//        liveCells.add(cells[a][a]);
-//
-//        int b = 20;
-//        setCellState(b, b, 0);
-//        liveCells.add(cells[b][b]);
     }
 
     /**
@@ -275,66 +275,5 @@ public class Environment {
                 cells[row][col] = new Cell(row, col);
             }
         }
-        //setupNeighbors();
     }
-
-    /**
-     * Give to a cell a list of its neighbors.
-     */
-//    private void setupNeighbors() {
-//        int numRows = cells.length;
-//        int numCols = cells[0].length;
-//        // Allow for 8 neighbors plus the cell.
-//        ArrayList<Cell> neighbors = new ArrayList<>(9);
-//        for (int rowIndex = 0; rowIndex < numRows; rowIndex++) {
-//            for (int colIndex = 0; colIndex < numCols; colIndex++) {
-//                Cell cell = cells[rowIndex][colIndex];
-//                // This process will also include the cell.
-//                // Replace with a process than only does the 4 immediate cells.
-////                for(int dr = -1; dr <= 1; dr++) {
-////                    for(int dc = -1; dc <= 1; dc++) {
-//////                        int nr = (numRows + rowIndex + dr) % numRows;
-//////                        int nc = (numCols + colIndex + dc) % numCols;
-////                        if (rowIndex + dr < 0 || rowIndex + dr >= numRows || colIndex + dc < 0 || colIndex + dc >= numCols) {
-////                            neighbors.add(new Cell(colIndex + dc, rowIndex + dr));
-////                        } else {
-////                            neighbors.add(cells[rowIndex + dr][colIndex + dc]);
-////                        }
-////
-////
-////                        //neighbors.add(cells[nr][nc]);
-////                    }
-////                }
-//
-//                // Add north, south, west and east neighbours
-//                // What if it is at the edge?
-//                if (rowIndex != 0) { // If not at top row, add the one north
-//                    neighbors.add(cells[colIndex][rowIndex - 1]); // Add north
-//                }
-//
-//                if (rowIndex != numRows - 1) {
-//                    //Cell south = new Cell(colIndex, rowIndex - 1);
-//                    neighbors.add(cells[colIndex][rowIndex + 1]); // Add south
-//                }
-//
-//                if (colIndex != 0) {
-//                    //Cell west = new Cell(colIndex - 1, rowIndex);
-//                    neighbors.add(cells[colIndex - 1][rowIndex]); // Add west
-//                }
-//
-//                if (colIndex != numCols - 1) {
-//                    //Cell east = new Cell(colIndex + 1, rowIndex);
-//                    neighbors.add(cells[colIndex + 1][rowIndex]); // Add east
-//                }
-//
-//
-//                // The neighbours should not include the cell at
-//                // (rowIndex,colIndex) so remove it.
-//                //neighbors.remove(cell);
-//                cell.setNeighbors(neighbors);
-//                neighbors.clear();
-//            }
-//        }
-//    }
-
 }
