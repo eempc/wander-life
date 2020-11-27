@@ -117,12 +117,12 @@ public class EnvironmentView extends JFrame
         });
         
         // Randomize the environment.
-        final JButton randomize = new JButton("Random");
-        randomize.addActionListener(e -> {
-            running = false;
-            env.randomize();
-            showCells();
-        });
+//        final JButton randomize = new JButton("Random");
+//        randomize.addActionListener(e -> {
+//            running = false;
+//            env.randomize();
+//            showCells();
+//        });
 
         final JButton single = new JButton("Single");
         single.addActionListener(e -> {
@@ -157,7 +157,7 @@ public class EnvironmentView extends JFrame
         controls.add(step);
         controls.add(pause);
         controls.add(reset);
-        controls.add(randomize);
+        //controls.add(randomize);
         controls.add(single);
         controls.add(multi);
         

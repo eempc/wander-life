@@ -45,7 +45,8 @@ public class Environment {
         nRows = numRows;
         nCols = numCols;
         setup(numRows, numCols);
-        randomize();
+        reset();
+        //randomize();
         view = new EnvironmentView(this, numRows, numCols);
         view.showCells();
         liveCells = new ArrayList<>();
@@ -128,16 +129,16 @@ public class Environment {
     /**
      * Generate a random setup.
      */
-    public void randomize() {
-        int numRows = cells.length;
-        int numCols = cells[0].length;
-        SecureRandom rand = new SecureRandom();
-        for (int row = 0; row < numRows; row++) {
-            for (int col = 0; col < numCols; col++) {
-                setCellState(row, col, rand.nextInt(Cell.NUM_STATES));
-            }
-        }
-    }
+//    public void randomize() {
+//        int numRows = cells.length;
+//        int numCols = cells[0].length;
+//        SecureRandom rand = new SecureRandom();
+//        for (int row = 0; row < numRows; row++) {
+//            for (int col = 0; col < numCols; col++) {
+//                setCellState(row, col, rand.nextInt(Cell.NUM_STATES));
+//            }
+//        }
+//    }
 
     public void single() {
         reset();
