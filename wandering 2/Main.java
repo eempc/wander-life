@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -60,7 +59,7 @@ public class Main {
             }
         }
 
-        // Cna't copy by iteration for jagged array
+        //
         int[][] copy2 = new int[original.length][];
         for (int i = 0; i < original.length; i++) {
             copy2[i] = new int[original[i].length];

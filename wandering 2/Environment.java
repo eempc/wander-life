@@ -57,8 +57,8 @@ public class Environment {
     public void step() {
         ArrayList<Cell> tempNewLiveCells = new ArrayList<>();
 
-        int numRows = cells.length;
-        int numCols = cells[0].length;
+//        int numRows = cells.length;
+//        int numCols = cells[0].length;
 
         Iterator<Cell> it = liveCells.iterator();
 
@@ -67,12 +67,18 @@ public class Environment {
             int currentCellRow = c.getRowIndex();
             int currentCellColumn = c.getColIndex();
 
-            System.out.println(currentCellRow);
-            System.out.println(currentCellColumn);
+//            System.out.println(currentCellRow);
+//            System.out.println(currentCellColumn);
 
             ArrayList<Cell> choices = new ArrayList<>();
 
-            // If not top row, add the south
+            // neighbours
+//            Cell north = cells[currentCellRow - 1][currentCellColumn];
+//            Cell south = cells[currentCellRow + 1][currentCellColumn];
+//            Cell west = cells[currentCellRow][currentCellColumn - 1];
+//            Cell east = cells[currentCellRow][currentCellColumn + 1];
+
+            // If not top row, add the north
             if (currentCellRow != 0) {
                 choices.add(cells[currentCellRow - 1][currentCellColumn]);
             }
@@ -83,12 +89,12 @@ public class Environment {
             }
 
             // If not bottom row, add the south
-            if (currentCellRow != numRows - 1) {
+            if (currentCellRow != nRows - 1) {
                 choices.add(cells[currentCellRow + 1][currentCellColumn]);
             }
 
             // If not right column, add the east
-            if (currentCellColumn != numCols - 1) {
+            if (currentCellColumn != nCols - 1) {
                 choices.add(cells[currentCellRow][currentCellColumn + 1]);
             }
 
@@ -135,15 +141,15 @@ public class Environment {
 
     public void single() {
         reset();
-        setCellState(25, 25, 0);
+        setCellState(0, 0, 0);
         liveCells = new ArrayList<>();
-        liveCells.add(cells[25][25]);
+        liveCells.add(cells[0][0]);
     }
 
     public void multi() {
         reset();
         liveCells = new ArrayList<>();
-        for (int i = 0; i < 12; i++) {
+        for (int i = 0; i < 24; i++) {
             int cat = rng.nextInt(nRows);
             int dog = rng.nextInt(nCols);
             setCellState(cat, dog, 0);
