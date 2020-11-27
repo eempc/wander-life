@@ -150,10 +150,12 @@ public class Environment {
     public void multi() {
         reset();
         liveCells = new ArrayList<>();
+
+        // Initialise 24 alive cells on the board
         for (int i = 0; i < 24; i++) {
             int cat = rng.nextInt(nRows);
             int dog = rng.nextInt(nCols);
-            setCellState(cat, dog, 0);
+            setCellState(cat, dog, Cell.ALIVE);
             liveCells.add(cells[cat][dog]);
         }
     }
